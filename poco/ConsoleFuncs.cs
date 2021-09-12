@@ -4,14 +4,11 @@ namespace poco
 {
     class ConsoleFuncs
     {
-        public static int origRow = 0;
-        public static int origCol = 0;
-
         public static void writeAt(string s, int x, int y)
         {
             try
             {
-                Console.SetCursorPosition(origCol + x, origRow + y);
+                Console.SetCursorPosition(x, y);
                 Console.Write(s);
             }
             catch (ArgumentOutOfRangeException e)
@@ -24,7 +21,7 @@ namespace poco
         {
             try
             {
-                Console.SetCursorPosition(origCol + x, origRow + y);
+                Console.SetCursorPosition(x, y);
                 Console.ForegroundColor = fore;
                 Console.BackgroundColor = back;
                 Console.Write(s);
