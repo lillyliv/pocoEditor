@@ -26,7 +26,7 @@ namespace poco
         public static ConsoleKeyInfo cki = new ConsoleKeyInfo();
         public static ConsoleKeyInfo keyInfo;
 
-        public static string[] currentFileData;
+        public static string currentFileData;
 
         static void Main(string[] args)
         {

@@ -23,7 +23,7 @@ namespace poco
                     Program.cursorx++;
                 }
 
-                Program.currentFileData[Program.globalCursorY] += Program.key.ToString();
+                Program.currentFileData += Program.key.ToString();
 
             } else
             {
@@ -79,6 +79,7 @@ namespace poco
                 ConsoleFuncs.writeAt("\n", Program.cursorx, Program.cursory);
                 Program.cursorx = 0;
                 Program.cursory += 1;
+                Program.currentFileData += "\n";
                 return true;
             }
             return false;
