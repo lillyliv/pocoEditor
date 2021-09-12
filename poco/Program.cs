@@ -46,7 +46,7 @@ namespace poco
 
             //ConsoleFuncs.writeAtColor("hi", 0, 0, ConsoleColor.Red, ConsoleColor.Blue);
             //ConsoleFuncs.writeAtColor("hi2", 0, 1, ConsoleColor.DarkYellow, ConsoleColor.Magenta);
-
+            //ConsoleFuncs.writeAtColor(" ", 0, 0, ConsoleColor.White, ConsoleColor.White);
             do
             {
                 while (Console.KeyAvailable == false)

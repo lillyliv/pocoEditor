@@ -145,12 +145,23 @@ namespace poco
             }
             else if (Program.keyInfo.Key == ConsoleKey.DownArrow)
             {
+                if (Program.globalCursorY + 1 >= Program.height - 3) return true;
+
                 if (Program.globalCursorY == Program.height - 1) { }
                 else
                 {
+                    string[] lines = Program.currentFileData.Split("~\n");
+
                     Console.SetCursorPosition(Program.cursorx, Program.cursory + 1);
                     Program.cursory++;
                     Program.globalCursorY++;
+                    
+                    var len = lines[Program.globalCursorY].Length;
+                    if (len >= Program.globalCursorX) return true;
+
+                    Program.cursorx = (ushort)len;
+                    Program.globalCursorX = (ushort)len;
+                    Console.SetCursorPosition(Program.cursorx, Program.cursory);
                 }
                 return true;
             }
@@ -159,14 +170,26 @@ namespace poco
                 if (Program.globalCursorY == 0) { }
                 else
                 {
+                    string[] lines = Program.currentFileData.Split("~\n");
+
                     Console.SetCursorPosition(Program.cursorx, Program.cursory - 1);
                     Program.cursory--;
                     Program.globalCursorY--;
+
+                    var len = lines[Program.globalCursorY].Length;
+                    if (len >= Program.globalCursorX) return true;
+
+                    Program.cursorx = (ushort)len;
+                    Program.globalCursorX = (ushort)len;
+                    Console.SetCursorPosition(Program.cursorx, Program.cursory);
                 }
                 return true;
             }
             else if (Program.keyInfo.Key == ConsoleKey.RightArrow)
             {
+                string[] lines = Program.currentFileData.Split("~\n");
+                if (Program.globalCursorX >= lines[Program.globalCursorY].Length) return true;
+                
                 if (Program.cursorx == Program.width - 1) { }
                 else
                 {
