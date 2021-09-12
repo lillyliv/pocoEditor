@@ -16,20 +16,15 @@
             }
 
             file.Close();
-            Program.currentFileData = fileLines;
+            Program.currentFileData = string.Join("\n", fileLines);
             return fileLines;
         }
         public static void loadFile(string path)
         {
             System.Console.Clear();
-            string[] fileLines = readFile(path);
-            ushort currentY = 0;
+            readFile(path);
 
-            foreach(string line in fileLines)
-            {
-                ConsoleFuncs.writeLine(line, currentY);
-                currentY++;
-            }
+            System.Console.Write(Program.currentFileData);
         }
     }
 }
