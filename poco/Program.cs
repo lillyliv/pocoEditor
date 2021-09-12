@@ -33,6 +33,8 @@ namespace poco
 
         static void Main(string[] args)
         {
+            System.Console.Clear();
+
             width = (ushort)Console.WindowWidth;
             height = (ushort)Console.WindowHeight;
 

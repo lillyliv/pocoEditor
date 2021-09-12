@@ -77,40 +77,46 @@ namespace poco
         {
             if (Program.keyInfo.Key == ConsoleKey.Backspace && Program.cursorx != 0)
             {
-                ConsoleFuncs.writeAt(" ", Program.cursorx - 1, Program.cursory);
-                Program.cursorx -= 1;
-                Program.globalCursorX -= 1;
-                Console.SetCursorPosition(Program.cursorx, Program.cursory);
+                try
+                {
+                    ConsoleFuncs.writeAt(" ", Program.cursorx - 1, Program.cursory);
+                    Program.cursorx -= 1;
+                    Program.globalCursorX -= 1;
+                    Console.SetCursorPosition(Program.cursorx, Program.cursory);
 
-                string[] lines = Program.currentFileData.Split("~\n");
-                char[] chars = lines[Program.globalCursorY].ToCharArray();
+                    string[] lines = Program.currentFileData.Split("~\n");
+                    char[] chars = lines[Program.globalCursorY].ToCharArray();
 
+                    var foos = new List<char>(chars);
+                    foos.RemoveAt((int)(Program.globalCursorX));
+                    chars = foos.ToArray();
 
-                //chars[Program.globalCursorX - 1] = "";
+                    var concatChars = string.Join("", chars);
 
-                //var concatChars = string.Join("", chars);
+                    lines[Program.globalCursorY] = concatChars;
 
-                var foos = new List<char>(chars);
-                //Console.WriteLine("\n\n" + chars.Length);
-                //Console.WriteLine("\n\n"+foos.Count);
-                //Console.WriteLine(Program.globalCursorX);
-                foos.RemoveAt((int)(Program.globalCursorX));
-                chars = foos.ToArray();
-
-                var concatChars = string.Join("", chars);
-
-                lines[Program.globalCursorY] = concatChars;
-
-                Program.currentFileData = string.Join("~\n", lines);
-                return true;
+                    Program.currentFileData = string.Join("~\n", lines);
+                    return true;
+                } catch {
+                    Program.cursorx -= 1;
+                    Program.globalCursorX -= 1;
+                    return true;
+                }
             }
-            else if (Program.keyInfo.Key == ConsoleKey.Backspace && Program.cursorx == 0 && Program.cursory != 0)
+            else if (Program.keyInfo.Key == ConsoleKey.Backspace && Program.globalCursorX == 0 && Program.globalCursorY != 0)
             {
-                ConsoleFuncs.writeAt(" ", Program.cursorx, Program.cursory + 1);
-                Program.cursory -= 1;
-                Program.globalCursorY -= 1;
+                /*try
+                {
+                    ConsoleFuncs.writeAt(" ", Program.cursorx, Program.cursory + 1);
+                    Program.cursory -= 1;
+                    Program.globalCursorY -= 1;
+                    return true;
+                } catch { return true; }*/
                 return true;
 
+            } else if (Program.keyInfo.Key == ConsoleKey.Backspace && Program.globalCursorX == 0 && Program.globalCursorY == 0)
+            {
+                return true;
             }
             else if (Program.keyInfo.Key == ConsoleKey.Enter)
             {
@@ -139,7 +145,7 @@ namespace poco
             }
             else if (Program.keyInfo.Key == ConsoleKey.DownArrow)
             {
-                if (Program.cursorx == Program.height - 1) { }
+                if (Program.globalCursorY == Program.height - 1) { }
                 else
                 {
                     Console.SetCursorPosition(Program.cursorx, Program.cursory + 1);
@@ -150,7 +156,7 @@ namespace poco
             }
             else if (Program.keyInfo.Key == ConsoleKey.UpArrow)
             {
-                if (Program.cursory == 0) { }
+                if (Program.globalCursorY == 0) { }
                 else
                 {
                     Console.SetCursorPosition(Program.cursorx, Program.cursory - 1);
