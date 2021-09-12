@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace poco
 {
@@ -17,20 +18,34 @@ namespace poco
                     ConsoleFuncs.writeAt(Program.key.ToString(), 0, Program.cursory+1);
                     Program.cursorx = 1;
                     Program.cursory++;
+                    Program.globalCursorX++;
                 } else
                 {
                     ConsoleFuncs.writeAt(Program.key.ToString(), Program.cursorx, Program.cursory);
                     Program.cursorx++;
+                    Program.globalCursorX++;
                 }
 
                 Program.currentFileData += Program.key.ToString();
 
-            } else
+            } else if (Program.control == true)
             {
+                if(Program.cki.Key == ConsoleKey.S)
+                {
+                    //Console.WriteLine("save");
 
+                    Files.saveFile(Program.currentPath);
+
+                }
             }
             
         }
+        /*
+        only spaghetti below here
+
+
+        and above here
+         */
         private static void checkModifiers()
         {
             if ((Program.cki.Modifiers & ConsoleModifiers.Alt) != 0)
@@ -64,13 +79,25 @@ namespace poco
             {
                 ConsoleFuncs.writeAt(" ", Program.cursorx - 1, Program.cursory);
                 Program.cursorx -= 1;
+                Program.globalCursorX -= 1;
                 Console.SetCursorPosition(Program.cursorx, Program.cursory);
 
                 string[] lines = Program.currentFileData.Split("~\n");
-                string[] chars = lines[Program.globalCursorY].Split("");
-                chars[Program.globalCursorX - 1] = "";
+                char[] chars = lines[Program.globalCursorY].ToCharArray();
 
-                var concatChars = string.Concat(chars);
+
+                //chars[Program.globalCursorX - 1] = "";
+
+                //var concatChars = string.Join("", chars);
+
+                var foos = new List<char>(chars);
+                //Console.WriteLine("\n\n" + chars.Length);
+                //Console.WriteLine("\n\n"+foos.Count);
+                //Console.WriteLine(Program.globalCursorX);
+                foos.RemoveAt((int)(Program.globalCursorX));
+                chars = foos.ToArray();
+
+                var concatChars = string.Join("", chars);
 
                 lines[Program.globalCursorY] = concatChars;
 
@@ -81,6 +108,7 @@ namespace poco
             {
                 ConsoleFuncs.writeAt(" ", Program.cursorx, Program.cursory + 1);
                 Program.cursory -= 1;
+                Program.globalCursorY -= 1;
                 return true;
 
             }
@@ -88,7 +116,9 @@ namespace poco
             {
                 ConsoleFuncs.writeAt("\n", Program.cursorx, Program.cursory);
                 Program.cursorx = 0;
+                Program.globalCursorX = 0;
                 Program.cursory += 1;
+                Program.globalCursorY += 1;
                 Program.currentFileData += "~\n";
                 return true;
             }

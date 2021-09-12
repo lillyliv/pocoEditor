@@ -1,4 +1,8 @@
-﻿namespace poco
+﻿using System.IO;
+using System.Threading.Tasks;
+
+
+namespace poco
 {
     class Files
     {
@@ -25,6 +29,18 @@
             readFile(path);
 
             System.Console.Write(Program.currentFileData);
+        }
+        public static async void saveFile(string path)
+        {
+            try
+            {
+                string[] lines = Program.currentFileData.Split("~\n");
+
+                System.IO.File.Delete(path);
+
+                await File.WriteAllLinesAsync(path, lines);
+
+            } catch (System.Exception e) { }
         }
     }
 }

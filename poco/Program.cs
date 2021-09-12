@@ -5,6 +5,8 @@ namespace poco
 {
     class Program
     {
+        //so many public static's jesus christ
+
         public static bool alt = false;
         public static bool shift = false;
         public static bool control = false;
@@ -27,6 +29,7 @@ namespace poco
         public static ConsoleKeyInfo keyInfo;
 
         public static string currentFileData;
+        public static string currentPath;
 
         static void Main(string[] args)
         {
@@ -36,6 +39,7 @@ namespace poco
             try
             {
                 Files.loadFile(args[0]);
+                currentPath = args[0];
             } catch (Exception e){ }
 
             //ConsoleFuncs.writeAtColor("hi", 0, 0, ConsoleColor.Red, ConsoleColor.Blue);
