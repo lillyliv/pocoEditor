@@ -23,6 +23,8 @@ namespace poco
                     Program.cursorx++;
                 }
 
+                Program.currentFileData[Program.globalCursorY] += Program.key.ToString();
+
             } else
             {
 
