@@ -35,6 +35,13 @@ namespace poco
             try
             {
                 string[] lines = Program.currentFileData.Split("~\n");
+                var i = 0;
+
+                foreach(string line in lines)
+                {
+                    lines[i] = line.Replace("!~", "~");
+                    i++;
+                }
 
                 System.IO.File.Delete(path);
 

@@ -25,8 +25,13 @@ namespace poco
                     Program.cursorx++;
                     Program.globalCursorX++;
                 }
-
-                Program.currentFileData += Program.key.ToString();
+                if(Program.key.ToString() != "~")
+                {
+                    Program.currentFileData += Program.key.ToString();
+                } else 
+                {
+                    Program.currentFileData += "!~";
+                }
 
             } else if (Program.control == true)
             {
@@ -86,6 +91,8 @@ namespace poco
 
                     string[] lines = Program.currentFileData.Split("~\n");
                     char[] chars = lines[Program.globalCursorY].ToCharArray();
+
+                    // have to do this because just setting it to an empty string doesnt work
 
                     var foos = new List<char>(chars);
                     foos.RemoveAt((int)(Program.globalCursorX));
