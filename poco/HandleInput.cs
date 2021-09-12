@@ -10,7 +10,7 @@ namespace poco
             if (specialKeys() == true) return;
             if (arrowKeys() == true) return;
 
-            if (Program.control != true)
+            if (Program.control != true && Program.alt != true)
             {
                 if (Program.cursorx >= Program.width)
                 {
@@ -65,6 +65,16 @@ namespace poco
                 ConsoleFuncs.writeAt(" ", Program.cursorx - 1, Program.cursory);
                 Program.cursorx -= 1;
                 Console.SetCursorPosition(Program.cursorx, Program.cursory);
+
+                string[] lines = Program.currentFileData.Split("~\n");
+                string[] chars = lines[Program.globalCursorY].Split("");
+                chars[Program.globalCursorX - 1] = "";
+
+                var concatChars = string.Concat(chars);
+
+                lines[Program.globalCursorY] = concatChars;
+
+                Program.currentFileData = string.Join("~\n", lines);
                 return true;
             }
             else if (Program.keyInfo.Key == ConsoleKey.Backspace && Program.cursorx == 0 && Program.cursory != 0)
@@ -79,7 +89,7 @@ namespace poco
                 ConsoleFuncs.writeAt("\n", Program.cursorx, Program.cursory);
                 Program.cursorx = 0;
                 Program.cursory += 1;
-                Program.currentFileData += "\n";
+                Program.currentFileData += "~\n";
                 return true;
             }
             return false;
