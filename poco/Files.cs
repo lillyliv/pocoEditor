@@ -32,22 +32,20 @@ namespace poco
         }
         public static async void saveFile(string path)
         {
+            string[] lines = Program.currentFileData.Split("~\n");
+            var i = 0;
+
+            foreach(string line in lines)
+            {
+                lines[i] = line.Replace("!~", "~");
+                i++;
+            }
             try
             {
-                string[] lines = Program.currentFileData.Split("~\n");
-                var i = 0;
-
-                foreach(string line in lines)
-                {
-                    lines[i] = line.Replace("!~", "~");
-                    i++;
-                }
-
                 System.IO.File.Delete(path);
+            } catch { File.Create(path); }
 
-                await File.WriteAllLinesAsync(path, lines);
-
-            } catch (System.Exception e) { }
+            await File.WriteAllLinesAsync(path, lines);
         }
     }
 }
